@@ -78,13 +78,29 @@ def get_user_words() -> List[str]:
     Gets words from user input and returns a list with these words.
     Usage: enter a word or press ctrl+d to finish.
     """
-    word_lins = sys.stdin.readlines()
+    word_lines = sys.stdin.readlines()
     user_words = []
-    for line in word_lins:
+    for line in word_lines:
         for word in line.split():
             if word:
                 user_words.append(word.lower())
     return user_words
+
+
+def get_all_good_user_words(user_words: List[str], letters: List[str]) -> List[str]:
+    """
+    The function returns a list of all words that are longer than three characters, do not contain #,
+    they contain a letter from the middle of the playing field
+    >>> get_all_good_user_words(['qazc', 'qcvb','dfgh','fghj'], list('qazxcvbnn'))
+    ['qazc', 'qcvb']
+    """
+    all_good_user_words = list()
+    center_char = letters[len(letters) // 2].lower()
+    for word in user_words:
+        if len(word) >= 4 and not word.startswith('#') and center_char in word:
+            if is_good_word(word, letters):
+                all_good_user_words.append(word.lower())
+    return all_good_user_words
 
 
 if __name__ == '__main__':
