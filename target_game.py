@@ -103,6 +103,32 @@ def get_all_good_user_words(user_words: List[str], letters: List[str]) -> List[s
     return all_good_user_words
 
 
+def get_good_user_words(user_words: List[str], letters: List[str], words_from_dict: List[str]) -> List[str]:
+    """
+        (list, list, list) -> list
+
+        Checks user words with the rules and returns list of those words
+        that are in dictionary.
+        """
+
+    all_good_user_words = set(get_all_good_user_words(user_words, letters))
+    print(all_good_user_words)
+    good_user_words = list(all_good_user_words.intersection(words_from_dict))
+    return good_user_words
+
+
+def get_pure_user_words(user_words: List[str], letters: List[str], words_from_dict: List[str]) -> List[str]:
+    """
+    (list, list, list) -> list
+    Checks user words with the rules and returns list of those words
+    that are not in dictionary.
+    """
+    all_good_user_words = set(get_all_good_user_words(user_words, letters))
+    pure_user_words = list(all_good_user_words.difference(words_from_dict))
+    print(len(all_good_user_words) - len(pure_user_words))
+    return pure_user_words
+
+
 if __name__ == '__main__':
     import doctest
 
