@@ -1,4 +1,5 @@
 import os
+import sys
 from random import choice
 from string import ascii_uppercase
 from typing import List
@@ -56,6 +57,7 @@ def generate_grid() -> List[List[str]]:
             grid[line].append(choice(ascii_uppercase))
     return grid
 
+
 def get_words(f: str, letters: List[str]) -> List[str]:
     """
     Reads the file f. Checks the words with rules and returns a list of words.
@@ -70,6 +72,22 @@ def get_words(f: str, letters: List[str]) -> List[str]:
                     words_set.add(line.lower())
     return list(words_set)
 
+
+def get_user_words() -> List[str]:
+    """
+    Gets words from user input and returns a list with these words.
+    Usage: enter a word or press ctrl+d to finish.
+    """
+    word_lins = sys.stdin.readlines()
+    user_words = []
+    for line in word_lins:
+        for word in line.split():
+            if word:
+                user_words.append(word.lower())
+    return user_words
+
+
 if __name__ == '__main__':
     import doctest
+
     doctest.testmod()
