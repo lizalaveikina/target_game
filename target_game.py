@@ -129,6 +129,48 @@ def get_pure_user_words(user_words: List[str], letters: List[str], words_from_di
     return pure_user_words
 
 
+def results_to_file(words_from_dict, pure_user_words, good_user_words):
+    """
+    Save the game results to file
+    """
+    with open('result.txt', 'w', encoding='utf-8') as file:
+        file.write(f'Number of correct words:\n\t{len(good_user_words)}\n')
+        file.write(f'Words that the player entered correctly and that \
+                        are present in the dictionary:\n\t{", ".join(good_user_words)}\n')
+        file.write(f'All possible words:\n\t{", ".join(words_from_dict)}\n')
+        file.write(f'Words '
+                   f'that the player missed:\n\t{", ".join(set(words_from_dict) - set(good_user_words))}\n')
+        file.write(f'Words entered by the player that \
+                        are not in the dictionary:\n\t{", ".join(pure_user_words)}\n')
+
+
+def results():
+    """
+    Main game function
+    """
+    clear_screen()
+    print('=============Start the GAME=============')
+    grid = generate_grid()
+    print(*grid, sep='\n')
+    print('=' * 40)
+    print('Enter a word or press Enter and ctrl+d to finish')
+    user_words = get_user_words()
+    print('=' * 40)
+    print('List of all words that can be built from the letters of the playing field:')
+    letters = get_letters(grid)
+    words_from_dict = get_words('en.txt', letters)
+    print(*words_from_dict, sep=', ')
+    print('=' * 40)
+    print('Pure user words:')
+    pure_user_words = get_pure_user_words(user_words, letters, words_from_dict)
+    print(*pure_user_words, sep=', ')
+    print('=' * 40)
+    print('Good user words:')
+    good_user_words = get_good_user_words(user_words, letters, words_from_dict)
+    print(*good_user_words, sep=', ')
+    results_to_file(words_from_dict, pure_user_words, good_user_words)
+
+
 if __name__ == '__main__':
     import doctest
 
