@@ -56,6 +56,19 @@ def generate_grid() -> List[List[str]]:
             grid[line].append(choice(ascii_uppercase))
     return grid
 
+def get_words(f: str, letters: List[str]) -> List[str]:
+    """
+    Reads the file f. Checks the words with rules and returns a list of words.
+    """
+    words_set = set()
+    with open(f, 'r', encoding='utf-8') as file:
+        for line in file:
+            line = line.strip().lower()
+            center_char = letters[len(letters) // 2].lower()
+            if len(line) >= 4 and not line.startswith('#') and center_char in line:
+                if is_good_word(line, letters):
+                    words_set.add(line.lower())
+    return list(words_set)
 
 if __name__ == '__main__':
     import doctest
